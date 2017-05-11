@@ -1,6 +1,6 @@
 (ns testit.core-test
-  (:require [clojure.test :refer :all]
-            [testit.core :refer :all]))
+  (:require [clojure.test :refer [deftest is]]
+            [testit.core :refer [contains]]))
 
 (deftest basic-contains-test
   (let [t (contains {:a 1})]
@@ -29,7 +29,7 @@
                              "Cache-Control" "no-store"}
                    :body "hello"})))
     (is (false? (t {:status 200
-                    :headers {"Content-Type" "text/plain"
+                    :headers {"Content-Type" "text/plain" 
                               "Cache-Control" "no-store"}
                     :body "hello"})))))
 
@@ -38,9 +38,9 @@
   (is (false? ((contains [1 2 3]) [3 2 1])))
   (is (false? ((contains [1 2 3]) [1 2])))
   (is (false? ((contains [1 2 3]) [1 2 3 4])))
-  (is (true? ((contains [1 2 ...]) [1 2])))
-  (is (true? ((contains [1 2 ...]) [1 2 3])))
-  (is (true? ((contains [1 2 ...]) [1 2 3 4])))
+  (is (true? ((contains [1 2 :...]) [1 2])))
+  (is (true? ((contains [1 2 :...]) [1 2 3])))
+  (is (true? ((contains [1 2 :...]) [1 2 3 4])))
   (is (true? ((contains {:foo [1 2 3]}) {:foo [1 2 3]})))
   (is (true? ((contains [pos? neg?]) [1 -2])))
   (is (true? ((contains {:foo [pos? neg?]}) {:foo [1 -2]})))
